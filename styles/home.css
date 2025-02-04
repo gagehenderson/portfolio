@@ -1,0 +1,90 @@
+/*
+ * ╭─────────────────────────────────────────────────────────╮
+ * │ Header                                                  │
+ * ╰─────────────────────────────────────────────────────────╯
+*/
+
+@keyframes titleTextFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) skewX(3deg) skewY(2deg);
+        font-variation-settings: 'wght' 100;
+    }
+    80% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        font-variation-settings: 'wght' 900;
+    }
+}
+@keyframes subTextFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) skewX(-3deg) skewY(2deg);
+    }
+    80% {
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center
+}
+.header canvas {
+    position: absolute;
+    z-index: -1;
+}
+.header .text-container {
+    overflow: hidden;
+}
+.header .name-section {
+    width: 33%;
+    font-size: 3rem;
+    font-family: 'Playfair Display', serif;
+    font-variation-settings: 'wght' 100;
+    text-align: left;
+    color: white;
+}
+.header .name-section .text-container .text {
+    opacity: 0;
+    animation: titleTextFadeIn 1.35s ease-in-out 0.1s forwards;
+}
+.header .name-section .text-container:nth-child(2) .text {
+    animation-delay: 0.5s;
+}
+.header .vertical-divider {
+    width: 2px;
+    height: 200px;
+    background-color: rgb(125,125,125);
+    margin: 0 25px;
+}
+.header .desc-section {
+    width: 66%;
+}
+.header .desc-section .text-container .text {
+    opacity:0;
+    font-family: Montserrat;
+    font-size: 1.5rem;
+    text-align: right;
+    color:rgb(175,175,175);
+    animation: subTextFadeIn 2.75s ease-in-out 0.5s forwards;
+}
+.header .desc-section .text-container:nth-child(2) .text {
+    animation-delay: 0.75s;
+}
+.header .desc-section .text-container:nth-child(3) .text {
+    animation-delay: 1s;
+}
