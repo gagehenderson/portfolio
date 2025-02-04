@@ -42,7 +42,6 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    /* background: black; */
     z-index:1;
 }
 .header canvas {
@@ -80,7 +79,7 @@
 .header .vertical-divider {
     width: 2px;
     height: 200px;
-    background-color: rgb(125,125,125);
+    background-color: white;
     margin: 0 25px;
 }
 .header .desc-section {

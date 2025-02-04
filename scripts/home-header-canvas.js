@@ -1,11 +1,11 @@
 window.addEventListener("load", function () {
     // Constants, tweak these for fun results :)
     const BLUR_AMOUNT   = 0;
-    const HUE_ROT_SPEED = 50;
+    const HUE_ROT_SPEED = 25;
     const DIM_ALPHA     = 0.001;
     const BALL_COUNT    = 10;
-    const BALL_SIZE     = 5;
-    const BALL_SPEED    = 50;
+    const BALL_SIZE     = 100;
+    const BALL_SPEED    = 100;
 
     // Setup the canvas
     let canvas = document.getElementById("header-canvas");
