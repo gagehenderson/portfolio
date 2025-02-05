@@ -1,0 +1,27 @@
+@font-face {
+    font-family: "Eurostile 2";
+    src: url("../../assets/fonts/Eurostile-2.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Eurostile 2";
+    src: url("../../assets/fonts/Eurostile-MN.ttf");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Neuropol";
+    src: url("../../assets/fonts/Neuropol.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Squared2";
+    src: url("../../assets/fonts/Squared2.otf");
+    font-weight: normal;
+    font-style: normal;
+}
