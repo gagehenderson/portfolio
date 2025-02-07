@@ -11,14 +11,8 @@
     z-index:1;
     background: black;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
-}
-.header .name-section {
-    font-family: "Eurostile 2", sans-serif;
-    font-size: 4rem;
-    font-weight: bold;
-    margin-right: 200px;
 }
 .header canvas {
     position: absolute;

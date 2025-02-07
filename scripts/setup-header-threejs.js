@@ -23,7 +23,7 @@ const CAM_NEAR       = 0.1;
 const CAM_FAR        = 1000;
 const MODEL_X        = -3.5;
 const MODEL_Y        = -5;
-const MODEL_Z        = -12;
+const MODEL_Z        = -8;
 const CRT_ANIM_SPEED = 3;
 const BLOOM          = {
     BASE_STRENGTH:  0.4,
@@ -36,15 +36,25 @@ const MODEL_ANIM = {
     INNER_ROT_SPEED: 2,
     OUTER_ROT_SPEED: 0.5,
 }
+const MOUSE_NUDGE = {
+    INFLUENCE: 1.5,
+    SPEED: 2
+}
 
 export default class HeaderThreeJS {
     constructor() {
         if ( WebGL.isWebGL2Available() === false ) {
             this.webglAvailable = false; 
             return;
+        } else {
+            this.webglAvailable = true;
         }
 
         this.animTimer = 0;
+        this.mouseNudge = {
+            currentX: 0, currentY: 0,
+            targetX: 0, targetY: 0
+        }
 
         // Split some of this code into private functions just for cleanliness.
         this._setupBasics();
@@ -60,24 +70,45 @@ export default class HeaderThreeJS {
     }
 
     // Called from home-header.js, we render our scene / do some fun animations
-    // here.
-    update(dt) {
+    // here
+    update(mouseX, mouseY, dt) {
         if ( this.webglAvailable===false ) { return; }
 
         this.animTimer += dt;
 
-        // Animate CRT shader
+        // basic animations.
         this.crtPass.uniforms['time'].value += CRT_ANIM_SPEED * dt;
-
-        // Rotate spheres.
         if (this.outerSphere != null) {
             this.outerSphere.rotation.y += MODEL_ANIM.OUTER_ROT_SPEED * dt;
             this.innerSphere.rotation.y += MODEL_ANIM.INNER_ROT_SPEED * dt;
         }
-
-
-        // Animate bloom
         this.bloomPass.strength = BLOOM.BASE_STRENGTH + Math.sin(this.animTimer * BLOOM.ANIM_SPEED) * BLOOM.ANIM_AMOUNT;
+
+        // Mouse responsiveness/nudging
+        if (this.model != null) {
+            const canvas = this.renderer.domElement;
+            const modelScreenNormal = new THREE.Vector3(
+                MODEL_X, MODEL_Y, MODEL_Z
+            )
+            modelScreenNormal.project(this.camera);
+
+            modelScreenNormal.x = Math.round((0.5 + modelScreenNormal.x / 2) * (canvas.width / window.devicePixelRatio));
+            modelScreenNormal.y = Math.round((0.5 - modelScreenNormal.y / 2) * (canvas.height / window.devicePixelRatio));
+
+            const angleToMouse = Math.atan2(
+               modelScreenNormal.y - mouseY, modelScreenNormal.x - mouseX
+            )+Math.PI/2;
+            
+            this.mouseNudge.targetX = Math.cos(angleToMouse) * MOUSE_NUDGE.INFLUENCE;
+            this.mouseNudge.targetY = Math.sin(angleToMouse) * MOUSE_NUDGE.INFLUENCE;
+
+            const diffX = (this.mouseNudge.targetX - this.mouseNudge.currentX)
+            const diffY = (this.mouseNudge.targetY - this.mouseNudge.currentY)
+            this.mouseNudge.currentX += diffX * MOUSE_NUDGE.SPEED * dt;
+            this.mouseNudge.currentY += diffY * MOUSE_NUDGE.SPEED * dt;
+
+            this.model.position.set(MODEL_X + this.mouseNudge.currentX, MODEL_Y + this.mouseNudge.currentY, MODEL_Z);
+        }
 
         this.composer.render();
     }
@@ -94,6 +125,7 @@ export default class HeaderThreeJS {
     _importModel() {
         const loader = new GLTFLoader();
         loader.load( '../assets/models/holo-planet.glb', function(gltf) {
+            this.model = gltf.scene;
             this.outerSphere = gltf.scene.children[0].children[0].children[0].children[0].children[1];
             this.innerSphere = gltf.scene.children[0].children[0].children[0].children[0].children[2];
 
@@ -101,7 +133,7 @@ export default class HeaderThreeJS {
             const stand = gltf.scene.children[0].children[0].children[0].children[0].children[0];
             stand.visible = false;
 
-            gltf.scene.position.set(MODEL_X,MODEL_Y,MODEL_Z)
+            this.model.position.set(MODEL_X, MODEL_Y, MODEL_Z);
             this.scene.add(gltf.scene);
         }.bind(this), undefined, function(error) {
             console.error(error);
