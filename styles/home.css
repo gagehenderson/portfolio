@@ -4,6 +4,17 @@
  * ╰─────────────────────────────────────────────────────────╯
 */
 
+@keyframes slideUpText {
+    0% {
+        transform: translateY(100%);
+        font-variation-settings: "wght" 100;
+    }
+    100% {
+        transform:translateY(0%);
+        font-variation-settings: "wght" 400;
+    }
+}
+
 .header {
     position: relative;
     width: 100vw;
@@ -18,4 +29,22 @@
     position: absolute;
     z-index: -1;
     filter: blur(1px);
+}
+.header .name-section {
+    font-family: "Teko", sans-serif;
+    font-size: 9rem;
+    display:flex;
+}
+.header .name-section .name-container {
+    position: relative;
+    overflow: hidden;
+    margin: 0 1rem;
+}
+
+.header .name-section .name-container div {
+    transform: translateY(100%);
+    animation: slideUpText 2s ease-in-out 0.25s forwards;
+}
+.header .name-section .name-container:nth-child(2) div {
+    animation-delay: 0.5s;
 }

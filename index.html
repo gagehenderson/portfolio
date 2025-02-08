@@ -12,26 +12,29 @@
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/home.css">
 
-    <!-- External -->
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@0.173.0/build/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.173.0/examples/jsm/"
-        }
-      }
-    </script>
+    <!-- Google Fonts -->
+    <!-- Sofia Sans, Saira, Teko, Inconsolata -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Saira:ital,wght@0,100..900;1,100..900&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&family=Teko:wght@300..700&display=swap" rel="stylesheet">
 
     <!-- Javscript -->
-    <script type="module" src="scripts/crt-shader.js"></script>
-    <script type="module" src="scripts/setup-header-threejs.js"></script>
-    <script type="module" src="scripts/home-header.js"></script>
+    <script type="module" src="scripts/home-header/NodeWeb.js"></script>
 </head>
 
 <body>
 
     <!-- Header -->
     <div class="header">
+        <canvas id="canvas"></canvas>
+        <div class = "name-section">
+            <div class = "name-container">
+                <div>Gage</div>
+            </div>
+            <div class = "name-container">
+                <div>Henderson</div>
+            </div>
+        </div>
     </div>
 
 </body>
